@@ -3,21 +3,23 @@ from datetime import datetime
 from datetime import timedelta
 from entities import Station
 from entities import Rider
+import pandas as pd
 
+
+dataset = pd.read_csv("services/datasets/trip.csv", error_bad_lines=False)
 
 environment = simpy.Environment()
 
-initial_time = '10/13/2014 10:31'
+initial_time = dataset['starttime'][0]
 bikes_avaliable = 3
 docks_avaliable = 3
 bikes = simpy.Container(environment, capacity=bikes_avaliable, init=bikes_avaliable)
 docks = simpy.Container(environment, capacity=docks_avaliable, init=0)
 station = Station(environment, initial_time, bikes, docks)
 
-r1 = Rider(environment, 0, '10/13/2014 10:31', '10/13/2014 10:48')
-r2 = Rider(environment, 1, '10/13/2014 10:31', '10/13/2014 10:48')
+for id in range(10):
+    rider = Rider(environment, id, dataset['starttime'][id], dataset['stoptime'][id])
+    environment.process(station.provide_bike(rider))
 
-
-environment.process(station.provide_bike(r1))
 
 environment.run()
