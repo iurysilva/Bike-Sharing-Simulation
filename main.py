@@ -8,6 +8,7 @@ from datetime import datetime
 from datetime import timedelta
 from entities import Station
 from entities import Rider
+import pandas as pd
 
 from services import dataset_services as dfs
 
@@ -33,7 +34,10 @@ plt.savefig("filename.png")
 
 
 
+dataset = pd.read_csv("services/datasets/trip.csv", error_bad_lines=False)
+
 environment = simpy.Environment()
+
 
 initial_time = dataset_trip['starttime'][0]
 bikes_avaliable = 100
