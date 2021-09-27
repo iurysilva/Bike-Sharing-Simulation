@@ -29,4 +29,3 @@ class Station:
                 yield dock
                 print(rider.id, 'Terminou a viagem em', rider.id_to_station, self.get_environment_time())
                 stations[rider.id_to_station].bikes.put(1)
-

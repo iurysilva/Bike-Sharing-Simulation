@@ -27,10 +27,9 @@ rides_df = pd.merge(dataset_trip,date_df, how='inner', on='Date')
 #display(date_df)
 #display(rides_df)
 
-#city_graph = nx.Graph()
-#city_graph = nx.from_pandas_edgelist(city_graph,'from_station_id','to_station_id')
-#nx.draw(city_graph,with_labels=False)
-#plt.savefig("filename.png")
+city_graph = nx.from_pandas_edgelist(rides_df,'from_station_id','to_station_id')
+nx.draw(city_graph,with_labels=False)
+plt.savefig("filename.png")
 
 
 
