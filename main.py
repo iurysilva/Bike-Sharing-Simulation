@@ -1,10 +1,6 @@
 import simpy
 import networkx as nx
 import matplotlib.pyplot as plt
-from IPython.display import display
-
-from datetime import datetime
-from datetime import timedelta
 from entities import Station
 from entities import Rider
 import pandas as pd
@@ -47,11 +43,8 @@ for row in range(len(dataset_station)):
     bikes = simpy.Container(environment, capacity=bikes_avaliable, init=bikes_avaliable)
     docks = simpy.Container(environment, capacity=docks_avaliable, init=docks_avaliable - bikes_avaliable)
     id = dataset_station.loc[row,'station_id']
-    #print(type(id))
-    #display(id)
     station = Station(id,environment, initial_time, bikes, docks)
     stations[id] = station
-    #print(dataset_station.loc[id,['station_id']])
 
 for row in range(len(rides_df)):
     rider = Rider(environment, row, rides_df['from_station_id'][row], rides_df['to_station_id'][row], rides_df['starttime'][row], rides_df['stoptime'][row])
