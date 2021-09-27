@@ -1,5 +1,4 @@
 import simpy
-import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 from IPython.display import display
@@ -39,14 +38,14 @@ dataset = pd.read_csv("services/datasets/trip.csv", error_bad_lines=False)
 environment = simpy.Environment()
 
 
-initial_time = dataset_trip['starttime'][0]
-bikes_avaliable = 100
-docks_avaliable = 100
+initial_time = rides_df['starttime'][0]
+bikes_avaliable = 2
+docks_avaliable = 300
 
 stations = {}
 for row in range(len(dataset_station)):
     bikes = simpy.Container(environment, capacity=bikes_avaliable, init=bikes_avaliable)
-    docks = simpy.Container(environment, capacity=docks_avaliable, init=0)
+    docks = simpy.Container(environment, capacity=docks_avaliable, init=docks_avaliable - bikes_avaliable)
     id = dataset_station.loc[row,'station_id']
     #print(type(id))
     #display(id)
@@ -58,5 +57,9 @@ for row in range(len(rides_df)):
     rider = Rider(environment, row, rides_df['from_station_id'][row], rides_df['to_station_id'][row], rides_df['starttime'][row], rides_df['stoptime'][row])
     environment.process(stations[rider.id_from_station].provide_bike(rider, stations))
 
-
 environment.run()
+
+total_time_waited = 0
+for station in stations:
+    total_time_waited += stations[station].minutes_waited
+
