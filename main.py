@@ -39,11 +39,11 @@ environment = simpy.Environment()
 initial_time = dataset_trip['starttime'][0]
 bikes_avaliable = 100
 docks_avaliable = 100
-bikes = simpy.Container(environment, capacity=bikes_avaliable, init=bikes_avaliable)
-docks = simpy.Container(environment, capacity=docks_avaliable, init=0)
 
 stations = {}
 for row in range(len(dataset_station)):
+    bikes = simpy.Container(environment, capacity=bikes_avaliable, init=bikes_avaliable)
+    docks = simpy.Container(environment, capacity=docks_avaliable, init=0)
     id = dataset_station.loc[row,'station_id']
     #print(type(id))
     #display(id)
@@ -53,8 +53,7 @@ for row in range(len(dataset_station)):
 
 for row in range(len(rides_df)):
     rider = Rider(environment, row, rides_df['from_station_id'][row], rides_df['to_station_id'][row], rides_df['starttime'][row], rides_df['stoptime'][row])
-    environment.process(stations[rider.id_from_station].provide_bike(rider))
-    environment.process(stations[rider.id_to_station].receive_bike(rider))
+    environment.process(stations[rider.id_from_station].provide_bike(rider, stations))
 
 
 environment.run()
