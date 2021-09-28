@@ -12,7 +12,8 @@ class Station:
         self.max_bikes_number = max_docks
         self.bikes = bikes_avaliable
         self.docks = docks_avaliable
-        self.minutes_waited = 0
+        self.start_queue_time = 0
+        self.end_queue_time = 0
         self.popularity = 0
 
     def get_environment_time(self):
@@ -28,7 +29,7 @@ class Station:
         with self.bikes.get(1) as bike:
             self.docks.put(1)
             yield bike
-            self.minutes_waited += get_difference_in_minutes(rider.arrival_time, str(self.get_environment_time()))
+            self.start_queue_time += get_difference_in_minutes(rider.arrival_time, str(self.get_environment_time()))
             rider_minutes_waited += get_difference_in_minutes(rider.arrival_time, str(self.get_environment_time()))
             print(rider.id, 'Started trip in %s %s, duration: %d min' % (self.id, self.get_environment_time(),
                                                                           rider.trip_duration))
@@ -37,7 +38,7 @@ class Station:
             end_time = str(self.get_environment_time())
             with stations[rider.id_to_station].docks.get(1) as dock:
                 yield dock
-                stations[rider.id_to_station].minutes_waited += get_difference_in_minutes(end_time, str(self.get_environment_time()))
+                stations[rider.id_to_station].end_queue_time += get_difference_in_minutes(end_time, str(self.get_environment_time()))
                 rider_minutes_waited += get_difference_in_minutes(end_time, str(self.get_environment_time()))
                 print(rider.id, 'Ended trip in', rider.id_to_station, self.get_environment_time())
                 print("Time waited: ", rider_minutes_waited, '\n')

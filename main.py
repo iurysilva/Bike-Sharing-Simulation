@@ -11,9 +11,9 @@ from services import distribute_bikes_and_docks_equally
 temperature = 97
 humidity = 50
 bikes_input = 500
-docks_input = 1300  # used only in distribution of bikes and docks equally
+docks_input = 1500  # used only in distribution of bikes and docks equally
 # distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
-function = distribute_bikes_and_docks_equally
+function = distribute_bikes_equally
 dia = 1
 
 dataset_station = pd.read_csv('services/datasets/station_cleaned.csv')
@@ -59,7 +59,11 @@ create_processes(environment, rides_df, bad_stations, stations)
 environment.run()
 
 # Calculate total waiting time in queue
-total_time_waited = 0
+start_time_waited = 0
+end_time_waited = 0
 for station in stations:
-    total_time_waited += stations[station].minutes_waited
-print("Total time of queues: ", total_time_waited)
+    start_time_waited += stations[station].start_queue_time
+    end_time_waited += stations[station].end_queue_time
+print("Total time of queues to get bike: ", start_time_waited)
+print("Total time of queues to put bike: ", end_time_waited)
+print("Total time of queues: ", start_time_waited + end_time_waited)
