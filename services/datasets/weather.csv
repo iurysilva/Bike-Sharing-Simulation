@@ -1,4 +1,4 @@
-"Date","Max_Temperature_F","Mean_Temperature_F","Min_TemperatureF","Max_Dew_Point_F","MeanDew_Point_F","Min_Dewpoint_F","Max_Humidity","Mean_Humidity","Min_Humidity","Max_Sea_Level_Pressure_In","Mean_Sea_Level_Pressure_In","Min_Sea_Level_Pressure_In","Max_Visibility_Miles","Mean_Visibility_Miles","Min_Visibility_Miles","Max_Wind_Speed_MPH","Mean_Wind_Speed_MPH","Max_Gust_Speed_MPH","Precipitation_In","Events"
+"Date","Max_Temperature_F","Mean_Temperature_F","Min_Temperature_F","Max_Dew_Point_F","MeanDew_Point_F","Min_Dewpoint_F","Max_Humidity","Mean_Humidity","Min_Humidity","Max_Sea_Level_Pressure_In","Mean_Sea_Level_Pressure_In","Min_Sea_Level_Pressure_In","Max_Visibility_Miles","Mean_Visibility_Miles","Min_Visibility_Miles","Max_Wind_Speed_MPH","Mean_Wind_Speed_MPH","Max_Gust_Speed_MPH","Precipitation_In","Events"
 "10/13/2014",71,62,54,55,51,46,87,68,46,30.03,29.79,29.65,10,10,4,13,4,"21",0,"Rain"
 "10/14/2014",63,59,55,52,51,50,88,78,63,29.84,29.75,29.54,10,9,3,10,5,"17",0.11,"Rain"
 "10/15/2014",62,58,54,53,50,46,87,77,67,29.98,29.71,29.51,10,9,3,18,7,"25",0.45,"Rain"
