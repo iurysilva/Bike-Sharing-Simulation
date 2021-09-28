@@ -57,14 +57,20 @@ def in_df_to_date(weather_df,humidity,temp):
 
 def from_count(df, id):
     count_df = df['from_station_id'].value_counts()
-    count = count_df.loc[[id]]
-    return count[0]
+    try:
+        count = count_df.loc[[id]]
+        return count[0]
+    except KeyError:
+        return 0
 
 
 def to_count(df, id):
     count_df = df['to_station_id'].value_counts()
-    count = count_df.loc[[id]]
-    return count[0]
+    try:
+        count = count_df.loc[[id]]
+        return count[0]
+    except KeyError:
+        return 0
 
 
 def outlier_ext_rmv(df):
@@ -100,16 +106,21 @@ def clean_to_station(dfA,dfB):
 
 
 def clean_dataset():
-    dataset_weather = pd.read_csv('datasets/weather.csv')
     dataset_station = pd.read_csv('datasets/station.csv')
     dataset_trip = pd.read_csv('datasets/trip.csv', error_bad_lines=False)
 
-    # date_df = in_df_to_date(dataset_weather, 62, 68)
     dataset_trip = outlier_ext_rmv(dataset_trip)
 
     cleaned_dataset = clean_from_station(dataset_trip, dataset_station)
     cleaned_dataset = clean_to_station(cleaned_dataset, dataset_station)
     cleaned_dataset.drop(50794, inplace=True)
-
     cleaned_dataset.to_csv("datasets/trip_cleaned.csv", index=False)
-    
+
+
+def return_bad_stations(path):
+    dataset_station = pd.read_csv(path)
+    ids = []
+    for row in range(len(dataset_station)):
+        if dataset_station["current_dockcount"][row] == 0:
+            ids.append(dataset_station["station_id"][row])
+    return ids

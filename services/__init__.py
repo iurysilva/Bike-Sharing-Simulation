@@ -2,3 +2,7 @@ from services.datetime_services import get_difference_in_minutes
 from services.datetime_services import get_date_str
 from services.graph_services import create_graph
 from services.distribution_services import get_amount_of_resources
+from services.simulation_services import distribute_bikes_by_popularity
+from services.simulation_services import create_stations
+from services.simulation_services import create_processes
+from services.simulation_services import distribute_bikes_equally

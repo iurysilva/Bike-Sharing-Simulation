@@ -13,7 +13,7 @@ class Station:
         self.bikes = bikes_avaliable
         self.docks = docks_avaliable
         self.minutes_waited = 0
-        self.from_station_number = None
+        self.popularity = 0
 
     def get_environment_time(self):
         time = datetime.strptime(self.initial_time, self.date_format_str)
