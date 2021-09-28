@@ -4,7 +4,7 @@ from entities import Station
 from entities import Rider
 
 
-def distribute_bikes_by_popularity(environment, stations, bikes_avaliable):
+def distribute_bikes_by_popularity(environment, stations, bikes_avaliable, docks_avaliable):
     total_of_bikes = 0
     bikes_remaining = 0
     for station in stations:
@@ -28,12 +28,27 @@ def distribute_bikes_by_popularity(environment, stations, bikes_avaliable):
     return total_of_bikes
 
 
-def distribute_bikes_equally(environment, stations, bikes_avaliable):
+def distribute_bikes_equally(environment, stations, bikes_avaliable, docks_avaliable):
     total_of_bikes = 0
     for station in stations:
         if stations[station].max_bikes_number != 0:
             max_bikes_number = stations[station].max_bikes_number
             bikes_number = round(bikes_avaliable/len(stations))
+            total_of_bikes += bikes_number
+            bikes = simpy.Container(environment, capacity=max_bikes_number, init=bikes_number)
+            stations[station].bikes = bikes
+            bikes_level = stations[station].bikes.level
+            stations[station].docks = simpy.Container(environment, capacity=max_bikes_number,
+                                                      init=max_bikes_number - bikes_level)
+    return total_of_bikes
+
+
+def distribute_bikes_and_docks_equally(environment, stations, bikes_avaliable, docks_avaliable):
+    total_of_bikes = 0
+    for station in stations:
+        if stations[station].max_bikes_number != 0:
+            max_bikes_number = round(docks_avaliable / len(stations))
+            bikes_number = round(bikes_avaliable / len(stations))
             total_of_bikes += bikes_number
             bikes = simpy.Container(environment, capacity=max_bikes_number, init=bikes_number)
             stations[station].bikes = bikes

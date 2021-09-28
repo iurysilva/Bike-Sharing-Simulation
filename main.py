@@ -6,11 +6,15 @@ from services import distribute_bikes_by_popularity
 from services import create_stations
 from services import create_processes
 from services import distribute_bikes_equally
+from services import distribute_bikes_and_docks_equally
 
-temperature = 24
+temperature = 97
 humidity = 50
-bikes_input = 100
-function = distribute_bikes_equally  # distribute_bikes_by_popularity, distribute_bikes_equally
+bikes_input = 500
+docks_input = 1300  # used only in distribution of bikes and docks equally
+# distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
+function = distribute_bikes_and_docks_equally
+dia = 1
 
 dataset_station = pd.read_csv('services/datasets/station_cleaned.csv')
 
@@ -21,7 +25,7 @@ dataset_trip = pd.read_csv("services/datasets/trip_cleaned.csv", error_bad_lines
 dataset_trip['Date'] = pd.to_datetime(dataset_trip['starttime']).dt.date
 
 date_df = dfs.in_df_to_date(dataset_weather, humidity, temperature)  # humidity and temperature
-rides_df = pd.merge(dataset_trip, date_df.head(1), how='inner', on='Date')
+rides_df = pd.merge(dataset_trip, date_df.head(dia), how='inner', on='Date')
 
 
 # Create graph
@@ -46,7 +50,7 @@ for station in stations:
     stations[station].popularity = popularity
 
 # distribute bikes and docks
-total_of_bikes = function(environment, stations, bikes_input)
+total_of_bikes = function(environment, stations, bikes_input, docks_input)
 # total_of_bikes = distribute_bikes_equally(environment, stations, bikes_input)
 
 # Create and run simulation processes

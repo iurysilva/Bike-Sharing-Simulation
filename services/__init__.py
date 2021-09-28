@@ -6,3 +6,4 @@ from services.simulation_services import distribute_bikes_by_popularity
 from services.simulation_services import create_stations
 from services.simulation_services import create_processes
 from services.simulation_services import distribute_bikes_equally
+from services.simulation_services import distribute_bikes_and_docks_equally
