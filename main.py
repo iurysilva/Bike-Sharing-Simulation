@@ -13,7 +13,7 @@ humidity = 50
 bikes_input = 500
 docks_input = 1500  # used only in distribution of bikes and docks equally
 # distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
-function = distribute_bikes_equally
+function = distribute_bikes_and_docks_equally
 dia = 1
 
 dataset_station = pd.read_csv('services/datasets/station_cleaned.csv')
@@ -29,7 +29,7 @@ rides_df = pd.merge(dataset_trip, date_df.head(dia), how='inner', on='Date')
 
 
 # Create graph
-# create_graph(rides_df)
+create_graph(rides_df)
 
 # Prepare simulation
 environment = simpy.Environment()
@@ -41,7 +41,7 @@ stations = create_stations(environment, initial_time, dataset_station)
 
 # Verify number of bikes leaving and arriving each station
 for station in stations:
-    dataset = rides_df
+    dataset = dataset_trip
     popularity_from = dfs.from_count(dataset, station) - dfs.to_count(dataset, station)
     popularity_to = dfs.from_count(dataset, station)
     popularity = (popularity_from + popularity_to)/2
@@ -67,3 +67,4 @@ for station in stations:
 print("Total time of queues to get bike: ", start_time_waited)
 print("Total time of queues to put bike: ", end_time_waited)
 print("Total time of queues: ", start_time_waited + end_time_waited)
+print("Number of trips: ", len(rides_df))
