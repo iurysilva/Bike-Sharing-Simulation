@@ -1,5 +1,6 @@
 import pandas as pd
 from IPython.display import display
+import numpy as np
 
 
 # exact
@@ -109,7 +110,7 @@ def temp(df_trip,df_Date):
     return df_trip.drop(df_trip.loc[~df_trip['Date'].isin(df_Date['Date'])].index)
 
 def clean_dataset():
-    dataset_station = pd.read_csv('datasets/station.csv')
+    dataset_station = pd.read_csv('datasets/station_cleaned.csv')
     dataset_trip = pd.read_csv('datasets/trip_cleaned.csv')
     dataset_weather = pd.read_csv('datasets/weather.csv')
 
@@ -131,3 +132,16 @@ def return_bad_stations(path):
         if dataset_station["current_dockcount"][row] == 0:
             ids.append(dataset_station["station_id"][row])
     return ids
+
+def get_stations_rank(stations):
+    popularity_number = np.zeros(len(stations))
+    station_id = []
+    for station in stations:
+        lista = list(stations)
+        popularity_number[lista.index(station)] = stations[station].popularity
+        station_id.append(station)
+    id = np.argsort(popularity_number)
+    station_id = np.array(station_id)
+    station_id = station_id[id[::-1]]
+    print(popularity_number)
+    print(station_id)
