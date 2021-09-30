@@ -12,7 +12,7 @@ months = mean_temp_by_month(pd.read_csv('services/datasets/weather.csv'))
 station_dataset = pd.read_csv('services/datasets/station_cleaned.csv')
 popularity_dict = {}
 date_list = []
-print(months)
+
 for date in months:
     month = datetime.strptime(date, "%m/%Y").month
     year = datetime.strptime(date, "%m/%Y").year
@@ -32,13 +32,14 @@ for date in months:
 
 for station in popularity_dict:
     plt.plot(date_list, popularity_dict[station], label=station)
-print(date_list)
 plt.xticks(np.arange(0, len(popularity_dict[station]), step=2))
 
 plt.legend()
 plt.show()
-'''
-for i in range(10):
-    plt.plot(i,i*2, marker="o",label="PMF")
-plt.show()
-'''
+print("Temperatura Média por Mês:")
+print(months)
+indexes = list(popularity_dict)
+for station in range(4):
+    print("\nPopularidade da estação %s por mês: " % indexes[station])
+    print(popularity_dict[indexes[station]])
+
