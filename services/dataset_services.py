@@ -1,9 +1,27 @@
-import pandas as pd
-from IPython.display import display
 import numpy as np
+import pandas as pd
+from datetime import datetime
+from IPython.display import display
+
 
 
 # exact
+def mean_temp_by_month(weather_df):
+    mean_by_month = {}
+    for day in range(len(weather_df)):
+        day_date = datetime.strptime(weather_df.loc[day,'Date'], '%m/%d/%Y')
+        index = str(day_date.month) + "-" + str(day_date.year)
+        if index not in mean_by_month:
+            mean_by_month[index] = np.array([weather_df.loc[day,'Mean_Temperature_F']])
+        else:
+            mean_by_month[index] = np.append(mean_by_month[index], (weather_df.loc[day,'Mean_Temperature_F']))
+
+    for month in mean_by_month:
+        mean_by_month[month] = mean_by_month[month].mean()
+    return mean_by_month
+
+
+
 def mean_humidity_to_date(weather_df,humidity):
     date_df = (weather_df.loc[weather_df['Mean_Humidity'] == humidity, ['Date']])
     return date_df
@@ -145,3 +163,6 @@ def get_stations_rank(stations):
     station_id = station_id[id[::-1]]
     print(popularity_number)
     print(station_id)
+
+
+print(mean_temp_by_month(pd.read_csv('datasets/weather.csv')))
