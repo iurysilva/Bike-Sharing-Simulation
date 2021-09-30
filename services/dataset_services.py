@@ -10,7 +10,7 @@ def mean_temp_by_month(weather_df):
     mean_by_month = {}
     for day in range(len(weather_df)):
         day_date = datetime.strptime(weather_df.loc[day,'Date'], '%m/%d/%Y')
-        index = str(day_date.month) + "-" + str(day_date.year)
+        index = str(day_date.month) + "/" + str(day_date.year)
         if index not in mean_by_month:
             mean_by_month[index] = np.array([weather_df.loc[day,'Mean_Temperature_F']])
         else:
@@ -20,7 +20,11 @@ def mean_temp_by_month(weather_df):
         mean_by_month[month] = mean_by_month[month].mean()
     return mean_by_month
 
-
+def month_to_date(trip_df,month,year):
+    trip_df['month'] = pd.to_datetime(trip_df['Date']).dt.month
+    trip_df['year'] = pd.to_datetime(trip_df['Date']).dt.year
+    date_df = (trip_df.loc[(trip_df['month'] == month) & (trip_df['year'] == year)])
+    return date_df
 
 def mean_humidity_to_date(weather_df,humidity):
     date_df = (weather_df.loc[weather_df['Mean_Humidity'] == humidity, ['Date']])
@@ -165,4 +169,4 @@ def get_stations_rank(stations):
     print(station_id)
 
 
-print(mean_temp_by_month(pd.read_csv('datasets/weather.csv')))
+print(month_to_date(pd.read_csv('datasets/trip_cleaned.csv'), 4, 2016))
