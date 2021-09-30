@@ -20,6 +20,10 @@ def mean_temp_by_month(weather_df):
         mean_by_month[month] = mean_by_month[month].mean()
     return mean_by_month
 
+def day_count(trip_df):
+    day_number = len(pd.unique(trip_df['Date']))
+    return day_number
+
 def month_to_date(trip_df,month,year):
     trip_df['month'] = pd.to_datetime(trip_df['Date']).dt.month
     trip_df['year'] = pd.to_datetime(trip_df['Date']).dt.year

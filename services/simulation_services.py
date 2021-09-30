@@ -2,6 +2,7 @@ import simpy
 from services import get_amount_of_resources
 from entities import Station
 from entities import Rider
+import numpy as np
 
 
 def distribute_bikes_by_popularity(environment, stations, bikes_avaliable, docks_avaliable):
@@ -79,3 +80,19 @@ def create_processes(environment, rides_df, bad_stations, stations):
             environment.process(stations[rider.id_from_station].provide_bike(rider, stations))
 
 
+def time_get_bike(stations, number_of_days):
+    time = {}
+    for station in stations:
+        if station not in time:
+            time[station] = np.array([])
+        time[station] = np.append(stations[station], stations[station].start_queue_time)
+    return time
+
+
+def time_put_bike(stations, number_of_days):
+    time = {}
+    for station in stations:
+        if station not in time:
+            time[station] = 0
+        time[station] += stations[station].end_queue_time
+    return time

@@ -11,3 +11,5 @@ from services.dataset_services import mean_temp_by_month
 from services.dataset_services import month_to_date
 from services.dataset_services import from_count
 from services.dataset_services import to_count
+from services.simulation_services import time_get_bike
+from services.simulation_services import time_put_bike
