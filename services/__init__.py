@@ -7,3 +7,7 @@ from services.simulation_services import create_stations
 from services.simulation_services import create_processes
 from services.simulation_services import distribute_bikes_equally
 from services.simulation_services import distribute_bikes_and_docks_equally
+from services.dataset_services import mean_temp_by_month
+from services.dataset_services import month_to_date
+from services.dataset_services import from_count
+from services.dataset_services import to_count

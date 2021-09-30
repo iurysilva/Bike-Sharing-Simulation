@@ -169,4 +169,5 @@ def get_stations_rank(stations):
     print(station_id)
 
 
-print(month_to_date(pd.read_csv('datasets/trip_cleaned.csv'), 4, 2016))
+# print(month_to_date(pd.read_csv('datasets/trip_cleaned.csv'), 4, 2016))
+# print(mean_temp_by_month(pd.read_csv('datasets/weather.csv')))
