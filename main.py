@@ -8,8 +8,8 @@ from services import create_processes
 from services import distribute_bikes_equally
 from services import distribute_bikes_and_docks_equally
 
-temperature = 97
-humidity = 50
+temperature = 66
+humidity = 64
 bikes_input = 500
 docks_input = 1500  # used only in distribution of bikes and docks equally
 # distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
@@ -21,7 +21,7 @@ dataset_station = pd.read_csv('services/datasets/station_cleaned.csv')
 dataset_weather = pd.read_csv('services/datasets/weather.csv')
 dataset_weather['Date'] = pd.to_datetime(dataset_weather['Date']).dt.date
 
-dataset_trip = pd.read_csv("services/datasets/trip_cleaned.csv", error_bad_lines=False)
+dataset_trip = pd.read_csv("services/datasets/trip_cleaned.csv")
 dataset_trip['Date'] = pd.to_datetime(dataset_trip['starttime']).dt.date
 
 date_df = dfs.in_df_to_date(dataset_weather, humidity, temperature)  # humidity and temperature
@@ -33,6 +33,7 @@ create_graph(rides_df)
 
 # Prepare simulation
 environment = simpy.Environment()
+print(rides_df)
 initial_time = rides_df['starttime'][0]
 
 

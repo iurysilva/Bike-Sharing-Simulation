@@ -104,16 +104,23 @@ def clean_from_station(dfA,dfB):
 def clean_to_station(dfA,dfB):
     return dfA.drop(dfA.loc[~dfA['to_station_id'].isin(dfB['station_id'])].index)
 
+def temp(df_trip,df_Date):
+
+    return df_trip.drop(df_trip.loc[~df_trip['Date'].isin(df_Date['Date'])].index)
 
 def clean_dataset():
     dataset_station = pd.read_csv('datasets/station.csv')
-    dataset_trip = pd.read_csv('datasets/trip.csv', error_bad_lines=False)
+    dataset_trip = pd.read_csv('datasets/trip_cleaned.csv')
+    dataset_weather = pd.read_csv('datasets/weather.csv')
+
+    dataset_weather['Date'] = pd.to_datetime(dataset_weather['Date']).dt.date
+    dataset_trip['Date'] = pd.to_datetime(dataset_trip['starttime']).dt.date
 
     dataset_trip = outlier_ext_rmv(dataset_trip)
 
     cleaned_dataset = clean_from_station(dataset_trip, dataset_station)
     cleaned_dataset = clean_to_station(cleaned_dataset, dataset_station)
-    cleaned_dataset.drop(50794, inplace=True)
+    cleaned_dataset = temp(cleaned_dataset, dataset_weather)
     cleaned_dataset.to_csv("datasets/trip_cleaned.csv", index=False)
 
 
