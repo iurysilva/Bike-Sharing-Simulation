@@ -14,8 +14,8 @@ from services import distribute_bikes_and_docks_equally
 
 from datetime import datetime
 
-bikes_increase_rate = 5
-docks_increase_rate = 5
+bikes_increase_rate = 0
+docks_increase_rate = 0
 bikes_input = 60
 docks_input = 100  # used only in distribution of bikes and docks equally
 # distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
@@ -99,8 +99,11 @@ for date in months:
         mean_times_get[station].append(stations[station].start_queue_time/dss.day_count(rides_df))
         mean_times_put[station].append(stations[station].end_queue_time/dss.day_count(rides_df))
 
+plt.style.use("seaborn-dark")
 fig1, ax1 = plt.subplots()
 fig2, ax2 = plt.subplots()
+ax1.set_title("Mean queue time by month to get bike from station")
+ax2.set_title("Mean queue time by month to return bike")
 for station in mean_times_get:
     ax1.plot(list(months), mean_times_get[station], label=station)
 ax1.set_xticks(np.arange(0, len(months), step=2))

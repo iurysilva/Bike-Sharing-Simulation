@@ -29,17 +29,17 @@ for date in months:
             popularity_dict[station] = [popularity]
         else:
             popularity_dict[station].append(popularity)
-
+plt.style.use('seaborn-dark')
 for station in popularity_dict:
     plt.plot(date_list, popularity_dict[station], label=station)
 plt.xticks(np.arange(0, len(popularity_dict[station]), step=2))
-
+plt.title("Popularity by month (and temperature) for each station")
 plt.legend()
 plt.show()
-print("Temperatura Média por Mês:")
+print("Mean temperature by month:")
 print(months)
 indexes = list(popularity_dict)
 for station in range(4):
-    print("\nPopularidade da estação %s por mês: " % indexes[station])
+    print("\nPopularity of %s by month: " % indexes[station])
     print(popularity_dict[indexes[station]])
 
