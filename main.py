@@ -39,12 +39,12 @@ for date in months:
     min_temperature = 43.25806451612903
 
     if temperatura > min_temperature:
-        value = round((temperatura - min_temperature) / 2 * bikes_increase_rate)
+        value = round(((temperatura - min_temperature) / 2) * bikes_increase_rate)
         if bikes_input + value < docks_input:
             bikes_input += value
 
     if temperatura > min_temperature:
-        value = round((temperatura - min_temperature) / 2 * docks_increase_rate)
+        value = round(((temperatura - min_temperature) / 2) * docks_increase_rate)
         docks_input += value
 
     month = datetime.strptime(date, "%m/%Y").month
@@ -99,14 +99,16 @@ for date in months:
         mean_times_get[station].append(stations[station].start_queue_time/dss.day_count(rides_df))
         mean_times_put[station].append(stations[station].end_queue_time/dss.day_count(rides_df))
 
+fig1, ax1 = plt.subplots()
+fig2, ax2 = plt.subplots()
 for station in mean_times_get:
-    plt.plot(list(months), mean_times_get[station], label=station)
-plt.xticks(np.arange(0, len(months), step=2))
-plt.legend()
-plt.show()
+    ax1.plot(list(months), mean_times_get[station], label=station)
+ax1.set_xticks(np.arange(0, len(months), step=2))
+ax1.legend()
+
 
 for station in mean_times_put:
-    plt.plot(list(months), mean_times_put[station], label=station)
-plt.xticks(np.arange(0, len(months), step=2))
-plt.legend()
-plt.show()
+    ax2.plot(list(months), mean_times_put[station], label=station)
+ax2.set_xticks(np.arange(0, len(months), step=2))
+ax2.legend()
+
