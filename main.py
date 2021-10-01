@@ -14,8 +14,8 @@ from services import distribute_bikes_and_docks_equally
 
 from datetime import datetime
 
-bikes_increase_rate = 0
-docks_increase_rate = 0
+bikes_increase_rate = 15
+docks_increase_rate = 1
 bikes_input = 60
 docks_input = 100  # used only in distribution of bikes and docks equally
 # distribute_bikes_by_popularity, distribute_bikes_equally, distribute_bikes_and_docks_equally
@@ -33,7 +33,8 @@ mean_times_get = {}
 mean_times_put = {}
 total_times = []
 months = dss.mean_temp_by_month(pd.read_csv('services/datasets/weather.csv'))
-
+bikes_input_month = []
+docks_input_month = []
 for date in months:
     temperatura = months[date]
     min_temperature = 43.25806451612903
@@ -87,7 +88,8 @@ for date in months:
         start_time_waited += stations[station].start_queue_time
         end_time_waited += stations[station].end_queue_time
 
-
+    bikes_input_month.append(bikes_input)
+    docks_input_month.append(docks_input)
     print("Total time of queues to get bike in this month: ", start_time_waited)
     print("Total time of queues to put bike in this month: ", end_time_waited)
     print("Total time of queues in this month: ", start_time_waited + end_time_waited)
@@ -98,6 +100,10 @@ for date in months:
             mean_times_put[station] = []
         mean_times_get[station].append(stations[station].start_queue_time/dss.day_count(rides_df))
         mean_times_put[station].append(stations[station].end_queue_time/dss.day_count(rides_df))
+
+print("Bike amount by month: ", bikes_input_month)
+print("Dock amount by month: ", docks_input_month)
+
 
 plt.style.use("seaborn-dark")
 fig1, ax1 = plt.subplots()
